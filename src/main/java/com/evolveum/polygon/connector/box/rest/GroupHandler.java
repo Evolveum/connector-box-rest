@@ -282,30 +282,6 @@ public class GroupHandler extends ObjectsProcessing {
 			HttpGet request = new HttpGet(uri);
 			handleGroups(request, handler, options, query);
 
-			/*
-			 * } else if (query instanceof ContainsFilter) { String attrValue =
-			 * ((ContainsFilter)
-			 * query).getAttribute().getValue().get(0).toString(); String
-			 * attrName = getAttrName(query); if (attrValue != null) {
-			 * 
-			 * uriBuilder.setPath(CRUD_GROUP); if (options != null) { if
-			 * ((options.getPageSize()) != null) { usersPerPage =
-			 * options.getPageSize(); uriBuilder.addParameter(LIMIT,
-			 * String.valueOf(usersPerPage)); if
-			 * (options.getPagedResultsOffset() != null) { pageNumber =
-			 * options.getPagedResultsOffset(); offset = (pageNumber *
-			 * usersPerPage) - usersPerPage; uriBuilder.addParameter(OFFSET,
-			 * String.valueOf(offset)); } } } try { uri = uriBuilder.build(); }
-			 * catch (URISyntaxException e) { StringBuilder sb = new
-			 * StringBuilder();
-			 * sb.append("It is not possible to create URI from URIBuilder:").
-			 * append(getURIBuilder().toString())
-			 * .append(";").append(e.getLocalizedMessage()); throw new
-			 * ConnectorException(sb.toString(), e); } HttpGet request = new
-			 * HttpGet(uri); substringFiltering(request, handler, options,
-			 * attrName, attrValue); }
-			 */
-
 		} else if (configuration.isEnableFilteredResultsHandler()) {
 
 			uriBuilder.setPath(CRUD_GROUP);
@@ -342,7 +318,6 @@ public class GroupHandler extends ObjectsProcessing {
 
 		for (int i = 0; i < groups.length(); i++) {
 			JSONObject group = groups.getJSONObject(i);
-			LOGGER.ok("response body Handle user: {0}", group);
 
 			ConnectorObject connectorObject = convertToConnectorObject(group, query);
 			boolean finish = !handler.handle(connectorObject);
@@ -416,7 +391,6 @@ public class GroupHandler extends ObjectsProcessing {
 			uriBuilder.setPath(CRUD_GROUP);
 			try {
 				uri = uriBuilder.build();
-				LOGGER.info("URI {0}", uri);
 			} catch (URISyntaxException e) {
 				StringBuilder sb = new StringBuilder();
 				sb.append("It is not possible to create URI from URIBuilder:").append(getURIBuilder().toString())
@@ -521,9 +495,6 @@ public class GroupHandler extends ObjectsProcessing {
 
 					membersAttr[i] = memInfo.toString();
 
-					LOGGER.info("response body Handle user: {0}", member);
-					LOGGER.info("MemInfo {0}", memInfo.toString());
-
 				}
 			} else {
 				if (member.has("user")) {
@@ -537,14 +508,10 @@ public class GroupHandler extends ObjectsProcessing {
 
 					adminsAttr[i] = memInfo.toString();
 
-					LOGGER.info("response body Handle user: {0}", member);
-					LOGGER.info("MemInfo {0}", memInfo.toString());
-
 				}
 			}
 		}
 
-		LOGGER.info("JSON MEMBERSHIPS: {0}", user.toString());
 		if (membersAttr.length > 0) {
 			builder.addAttribute(ATTR_MEMBERS, membersAttr);
 		}
@@ -565,7 +532,6 @@ public class GroupHandler extends ObjectsProcessing {
 		uriBuilder.setPath(CRUD_GROUP + "/" + uid + "/" + COLLABORATIONS);
 		try {
 			uri = uriBuilder.build();
-			LOGGER.info("URI {0}", uri);
 
 		} catch (URISyntaxException e) {
 			StringBuilder sb = new StringBuilder();
@@ -574,9 +540,7 @@ public class GroupHandler extends ObjectsProcessing {
 			throw new ConnectorException(sb.toString(), e);
 		}
 		HttpGet request = new HttpGet(uri);
-		LOGGER.info("PASS REQUEST URI");
 		JSONObject groups = callRequest(request, true);
-		LOGGER.info("PASS REQUEST URI");
 		JSONArray collaborations = groups.getJSONArray("entries");
 
 		String[] editorAttr = new String[collaborations.length()];
@@ -605,8 +569,6 @@ public class GroupHandler extends ObjectsProcessing {
 
 					editorAttr[i] = collabInfo.toString();
 
-					LOGGER.info("response body Handle collabs: {0}", item);
-					LOGGER.info("CollabInfo {0}", collabInfo.toString());
 				}
 			}
 			if (role.equals("viewer")) {
@@ -621,8 +583,6 @@ public class GroupHandler extends ObjectsProcessing {
 
 					viewerAttr[i] = collabInfo.toString();
 
-					LOGGER.info("response body Handle collabs: {0}", item);
-					LOGGER.info("CollabInfo {0}", collabInfo.toString());
 				}
 			}
 			if (role.equals("previewer")) {
@@ -637,8 +597,6 @@ public class GroupHandler extends ObjectsProcessing {
 
 					previewerAttr[i] = collabInfo.toString();
 
-					LOGGER.info("response body Handle collabs: {0}", item);
-					LOGGER.info("CollabInfo {0}", collabInfo.toString());
 				}
 			}
 			if (role.equals("uploader")) {
@@ -653,8 +611,6 @@ public class GroupHandler extends ObjectsProcessing {
 
 					uploaderAttr[i] = collabInfo.toString();
 
-					LOGGER.info("response body Handle collabs: {0}", item);
-					LOGGER.info("CollabInfo {0}", collabInfo.toString());
 				}
 			}
 			if (role.equals("previewer uploader")) {
@@ -669,8 +625,6 @@ public class GroupHandler extends ObjectsProcessing {
 
 					prevUploaderAttr[i] = collabInfo.toString();
 
-					LOGGER.info("response body Handle collabs: {0}", item);
-					LOGGER.info("CollabInfo {0}", collabInfo.toString());
 				}
 			}
 			if (role.equals("viewer uploader")) {
@@ -685,8 +639,6 @@ public class GroupHandler extends ObjectsProcessing {
 
 					viewUploaderAttr[i] = collabInfo.toString();
 
-					LOGGER.info("response body Handle collabs: {0}", item);
-					LOGGER.info("CollabInfo {0}", collabInfo.toString());
 				}
 			}
 			if (role.equals("co-owner")) {
@@ -701,13 +653,10 @@ public class GroupHandler extends ObjectsProcessing {
 
 					coownerAttr[i] = collabInfo.toString();
 
-					LOGGER.info("response body Handle collabs: {0}", item);
-					LOGGER.info("CollabInfo {0}", collabInfo.toString());
 				}
 			}
 
 		}
-		LOGGER.info("JSON COLLABORATIONS: {0}", collaborations.toString());
 		if (editorAttr.length > 0) {
 			builder.addAttribute(ATTR_EDITOR, editorAttr);
 		}
@@ -731,35 +680,5 @@ public class GroupHandler extends ObjectsProcessing {
 		}
 
 	}
-
-	/*
-	 * private boolean substringFiltering(HttpGet request, ResultsHandler
-	 * handler, OperationOptions options, String attrName, String subValue) { if
-	 * (request == null) { LOGGER.error("Request value not provided {0} ",
-	 * request); throw new
-	 * InvalidAttributeValueException("Request value not provided"); }
-	 * JSONObject result = callRequest(request);
-	 * 
-	 * JSONArray members = result.getJSONArray("entries"); // String attrName =
-	 * attribute.getName().toString(); //
-	 * LOGGER.info("\n\tSubstring filtering: {0} ({1})", attrName, // subValue);
-	 * for (int i = 0; i < members.length(); i++) { JSONObject member =
-	 * members.getJSONObject(i); if (!member.has(attrName)) {
-	 * LOGGER.warn("\n\tProcessing JSON Object does not contain attribute {0}.",
-	 * attrName); return false; } if (member.has(attrName) &&
-	 * (member.get(attrName)).toString().contains(subValue)) { //
-	 * LOG.ok("value: {0}, subValue: {1} - MATCH: {2}", //
-	 * jsonObject.get(attrName).toString(), subValue, "YES"); ConnectorObject
-	 * connectorObject = convertToConnectorObject(member); ; boolean finish =
-	 * !handler.handle(connectorObject); if (finish) { return true; } } // else
-	 * LOG.ok("value: {0}, subValue: {1} - MATCH: {2}", //
-	 * jsonObject.getString(attrName), subValue, "NO"); } return false; }
-	 * 
-	 * private String getAttrName(Filter query) { if (((ContainsFilter)
-	 * query).getAttribute() instanceof Name) { return "name"; } else return
-	 * ((ContainsFilter) query).getAttribute().getName();
-	 * 
-	 * }
-	 */
 
 }

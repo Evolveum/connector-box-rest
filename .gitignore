@@ -16,5 +16,4 @@ hs_err_pid*
 scratch/
 test-output/
 target/
-src/test/java/com/evolveum/polygon/connector/box/test
 sample/

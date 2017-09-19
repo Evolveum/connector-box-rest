@@ -85,81 +85,45 @@ public class ObjectsProcessing {
 		request.addHeader("Authorization", accessorToken.getClearString());
 		request.addHeader("Accept", "image/jpeg");
 
-		CloseableHttpClient client = HttpClientBuilder.create().build();
-		CloseableHttpResponse response = null;
-
-		try {
-			response = client.execute(request);
-		} catch (IOException e) {
-			StringBuilder sb = new StringBuilder();
-			sb.append("It is not possible to execute request:").append(request.toString()).append(";")
-					.append(e.getLocalizedMessage());
-			throw new ConnectorIOException(sb.toString(), e);
-		}
-
-		StatusLine statusLine = response.getStatusLine();
-		int statusCode = statusLine.getStatusCode();
-		LOG.info("StatusCode {0}", String.valueOf(statusCode));
-
-		if (statusCode == 401) {
-			LOG.info("ACCESS TOKEN: {0}", "not valid anymore, requesting new access token");
-			response = executeRequestWithRefresh(request);
-		}
-		processResponseErrors(response);
-		HttpEntity responseEntity = response.getEntity();
-		byte[] byteJPEG = null;
-		try {
-			byteJPEG = EntityUtils.toByteArray(responseEntity);
-		} catch (IOException e) {
-			throw new ConnectorIOException();
-		}
-
-		builder.addAttribute(ATTR_AVATAR, byteJPEG);
+		builder.addAttribute(ATTR_AVATAR, callPhotoRequest(request));
 
 	}
 
-	protected void putFieldIfExists(Set<Attribute> attributes, String fieldName,Class <?> type, JSONObject jo) {
+	protected void putFieldIfExists(Set<Attribute> attributes, String fieldName, Class<?> type, JSONObject jo) {
 		if (attributes == null || attributes.isEmpty()) {
 			throw new InvalidAttributeValueException("Attributes not provided or empty");
 		}
 		if (fieldName == null || fieldName.isEmpty()) {
 			throw new InvalidAttributeValueException("FieldName not provided or empty");
 		}
-		LOG.info("Fattributes: {0} ", attributes);
-		LOG.info("FNAME: {0} ", fieldName);
 		if (jo == null) {
 			throw new InvalidAttributeValueException("JSONObject not provided or empty");
 		}
 
 		Object fieldValue = null;
-		if (type == String.class){
-			LOG.info("String");
-			 fieldValue = getAttr(attributes, fieldName, String.class, null);
+		if (type == String.class) {
+
+			fieldValue = getAttr(attributes, fieldName, String.class, null);
+		} else if (type == Integer.class) {
+			fieldValue = getAttr(attributes, fieldName, Integer.class, null);
+		} else if (type == Boolean.class) {
+			fieldValue = getAttr(attributes, fieldName, Boolean.class, null);
 		}
-		else if (type == Integer.class){
-			 fieldValue = getAttr(attributes, fieldName, Integer.class, null);
-		}
-		else if (type == Boolean.class){
-			 fieldValue = getAttr(attributes, fieldName, Boolean.class, null);
-		}
-		
-		LOG.info("FVALUE: {0}", fieldValue);
+
 		if (fieldValue != null) {
-			LOG.info("FNAME: {0} ", fieldName);
-			LOG.info("FVALUE: {0}", fieldValue);
+
 			jo.put(fieldName, fieldValue);
 		}
 	}
-	
-	protected void putChildFieldIfExists(Set<Attribute> attributes, String fieldName, String attrName, Class <?> type, JSONObject jo) {
+
+	protected void putChildFieldIfExists(Set<Attribute> attributes, String fieldName, String attrName, Class<?> type,
+			JSONObject jo) {
 		if (attributes == null || attributes.isEmpty()) {
 			throw new InvalidAttributeValueException("Attributes not provided or empty");
 		}
 		if (fieldName == null || fieldName.isEmpty()) {
 			throw new InvalidAttributeValueException("FieldName not provided or empty");
 		}
-		LOG.info("Fattributes: {0} ", attributes);
-		LOG.info("FNAME: {0} ", fieldName);
 		if (jo == null) {
 			throw new InvalidAttributeValueException("JSONObject not provided or empty");
 		}
@@ -167,23 +131,17 @@ public class ObjectsProcessing {
 			throw new InvalidAttributeValueException("ATTRName not provided or empty");
 		}
 
-		
 		Object fieldValue = null;
-		if (type == String.class){
-			 fieldValue = getAttr(attributes, attrName, String.class, null);
+		if (type == String.class) {
+			fieldValue = getAttr(attributes, attrName, String.class, null);
+		} else if (type == Integer.class) {
+			fieldValue = getAttr(attributes, attrName, Integer.class, null);
+		} else if (type == Boolean.class) {
+			fieldValue = getAttr(attributes, attrName, Boolean.class, null);
 		}
-		else if (type == Integer.class){
-			 fieldValue = getAttr(attributes, attrName, Integer.class, null);
-		}
-		else if (type == Boolean.class){
-			 fieldValue = getAttr(attributes, attrName, Boolean.class, null);
-		}
-		LOG.info("FVALUE: {0}", fieldValue);
 		if (fieldValue != null) {
-			LOG.info("FNAME: {0} ", fieldName);
-			LOG.info("FVALUE: {0}", fieldValue);
 			jo.put(fieldName, fieldValue);
-			
+
 		}
 	}
 
@@ -197,8 +155,6 @@ public class ObjectsProcessing {
 
 		HttpEntity entity = null;
 		String result = null;
-		LOG.info("REQUEST {0}", request);
-		LOG.info("JSON {0}", json);
 		try {
 			entity = new ByteArrayEntity(json.toString().getBytes("UTF-8"));
 		} catch (UnsupportedEncodingException e) {
@@ -207,18 +163,17 @@ public class ObjectsProcessing {
 			throw new ConnectorException(sb.toString(), e);
 		}
 		request.setEntity(entity);
-		CloseableHttpResponse response = executeRequest(request);
-		processResponseErrors(response);
 
-		try {
+		try (CloseableHttpResponse response = executeRequest(request)) {
+			processResponseErrors(response);
 			result = EntityUtils.toString(response.getEntity());
+			return new JSONObject(result);
 		} catch (org.apache.http.ParseException e) {
 			throw new ConnectorException();
 		} catch (IOException e) {
 			throw new ConnectorIOException();
 		}
 
-		return new JSONObject(result);
 	}
 
 	protected JSONObject callRequest(HttpRequestBase request, boolean parseResult) {
@@ -226,22 +181,22 @@ public class ObjectsProcessing {
 			throw new InvalidAttributeValueException("Request not provided or empty");
 		}
 
-		CloseableHttpResponse response = executeRequest(request);
-		processResponseErrors(response);
-		if (!parseResult) {
-			return null;
-		}
-
 		String result = null;
-		try {
+		try (CloseableHttpResponse response = executeRequest(request)) {
+			processResponseErrors(response);
+			if (response.getStatusLine().getStatusCode() == 204) {
+				return null;
+			}
 			result = EntityUtils.toString(response.getEntity());
+			if (!parseResult) {
+				return null;
+			}
+			return new JSONObject(result);
 		} catch (org.apache.http.ParseException e) {
 			throw new ConnectorException();
 		} catch (IOException e) {
 			throw new ConnectorIOException();
 		}
-
-		return new JSONObject(result);
 
 	}
 
@@ -250,19 +205,46 @@ public class ObjectsProcessing {
 			throw new InvalidAttributeValueException("Request not provided or empty");
 		}
 
-		CloseableHttpResponse response = executeRequest(request);
-		processResponseErrors(response);
 		String result = null;
-		try {
+		try (CloseableHttpResponse response = executeRequest(request)) {
+			processResponseErrors(response);
 			result = EntityUtils.toString(response.getEntity());
+			return new JSONObject(result);
+		} catch (org.apache.http.ParseException e) {
+			throw new ConnectorException();
+		} catch (IOException e) {
+			throw new ConnectorIOException();
+		}
+
+	}
+
+	protected byte[] callPhotoRequest(HttpRequestBase request) {
+		if (request == null) {
+			throw new InvalidAttributeValueException("Request not provided or empty");
+		}
+		try (CloseableHttpResponse response = executeRequest(request)) {
+			StatusLine statusLine = response.getStatusLine();
+			int statusCode = statusLine.getStatusCode();
+
+			if (statusCode == 401) {
+				LOG.info("ACCESS TOKEN: {0}", "not valid anymore, requesting new access token");
+				HttpEntity responseEntity = executeRequestWithRefresh(request).getEntity();
+				byte[] byteJPEG = null;
+				byteJPEG = EntityUtils.toByteArray(responseEntity);
+				return byteJPEG;
+			}
+			processResponseErrors(response);
+			HttpEntity responseEntity = response.getEntity();
+			byte[] byteJPEG = null;
+			byteJPEG = EntityUtils.toByteArray(responseEntity);
+			return byteJPEG;
+
 		} catch (org.apache.http.ParseException e) {
 			throw new ConnectorException();
 		} catch (IOException e) {
 
 			throw new ConnectorIOException();
 		}
-
-		return new JSONObject(result);
 
 	}
 
@@ -314,8 +296,6 @@ public class ObjectsProcessing {
 		GuardedStringAccessor accessorSecret = new GuardedStringAccessor();
 		clientSecret.access(accessorSecret);
 
-		CloseableHttpClient client = HttpClientBuilder.create().build();
-
 		uriBuilder.setPath(TOKEN_ENDPOINT);
 
 		try {
@@ -348,27 +328,9 @@ public class ObjectsProcessing {
 		}
 
 		post.setEntity(entity);
-		CloseableHttpResponse response = null;
 
-		try {
-			response = (CloseableHttpResponse) client.execute(post);
-		} catch (IOException e) {
-			StringBuilder sbPost = new StringBuilder();
-			sb.append("It was not possible execute HttpUriRequest:").append(post).append(";")
-					.append(e.getLocalizedMessage());
-			throw new ConnectorIOException(sbPost.toString(), e);
-		}
+		JSONObject json = callRequest(post);
 
-		processResponseErrors(response);
-
-		JSONObject json = null;
-		try {
-			json = new JSONObject(EntityUtils.toString(response.getEntity()));
-		} catch (IOException e) {
-			StringBuilder sbJSON = new StringBuilder();
-			sb.append("Not possible to get response").append(response).append(";").append(e.getLocalizedMessage());
-			throw new ConnectorIOException(sbJSON.toString(), e);
-		}
 		String accessTokenJson = (String) json.get("access_token");
 		String token = (String) json.get("refresh_token");
 
@@ -415,13 +377,13 @@ public class ObjectsProcessing {
 		}
 		for (Attribute attr : attributes) {
 			if (attrName.equals(attr.getName())) {
-				LOG.info("1");
+
 				List<Object> vals = attr.getValue();
 				if (vals == null || vals.isEmpty()) {
 					return defaultVal;
 				}
 				if (vals.size() == 1) {
-					LOG.info("2");
+
 					Object val = vals.get(0);
 					if (val == null) {
 						return defaultVal;
@@ -463,59 +425,40 @@ public class ObjectsProcessing {
 		} catch (IOException e) {
 			LOG.warn("cannot read response body: " + e, e);
 		}
-		LOG.info("ERROR {0}: ", response.getStatusLine().getReasonPhrase());
 		String message = "HTTP error " + statusCode + " " + response.getStatusLine().getReasonPhrase() + " : "
 				+ responseBody;
 		LOG.error("{0}", message);
 		if (statusCode == 400 && message.contains("The client credentials are invalid")) {
-			closeResponse(response);
 			throw new InvalidCredentialException(message);
 		}
 		if (statusCode == 400 || statusCode == 405 || statusCode == 406) {
-			closeResponse(response);
 			throw new ConnectorIOException(message);
 		}
 		if (statusCode == 401 || statusCode == 402 || statusCode == 403 || statusCode == 407) {
-			closeResponse(response);
 			throw new PermissionDeniedException(message);
 		}
 		if (statusCode == 404 || statusCode == 410) {
-			closeResponse(response);
 			throw new UnknownUidException(message);
 		}
 		if (statusCode == 408) {
-			closeResponse(response);
 			throw new OperationTimeoutException(message);
 		}
 		if (statusCode == 409) {
-			closeResponse(response);
 			throw new AlreadyExistsException(message);
 		}
 		if (statusCode == 412) {
-			closeResponse(response);
 			throw new PreconditionFailedException(message);
 		}
 		if (statusCode == 418) {
-			closeResponse(response);
 			throw new UnsupportedOperationException("Sorry, no cofee: " + message);
 		}
 
-		closeResponse(response);
 		throw new ConnectorException(message);
-	}
-
-	protected void closeResponse(CloseableHttpResponse response) {
-		
-		try {
-			response.close();
-		} catch (IOException e) {
-			LOG.warn(e, "Error when trying to close response: " + response);
-		}
 	}
 
 	public CloseableHttpResponse executeRequest(HttpUriRequest request) {
 		if (request == null) {
-			throw new InvalidAttributeValueException("Response not provided");
+			throw new InvalidAttributeValueException("Request not provided");
 		}
 
 		GuardedString accessTokenConf = configuration.getAccessToken();
@@ -525,10 +468,11 @@ public class ObjectsProcessing {
 			refreshToken();
 
 		}
-
-		String accessToken = "Bearer " + accessorToken.getClearString();
-		request.setHeader("Content-Type", CONTENT_TYPE);
-		request.addHeader("Authorization", accessToken);
+		if (!request.containsHeader("Content-Type")) {
+			String accessToken = "Bearer " + accessorToken.getClearString();
+			request.setHeader("Content-Type", CONTENT_TYPE);
+			request.addHeader("Authorization", accessToken);
+		}
 		CloseableHttpClient client = HttpClientBuilder.create().build();
 		CloseableHttpResponse response = null;
 		try {
@@ -545,7 +489,6 @@ public class ObjectsProcessing {
 			return executeRequestWithRefresh(request);
 		}
 		return response;
-
 	}
 
 	public CloseableHttpResponse executeRequestWithRefresh(HttpUriRequest request) {
@@ -555,10 +498,10 @@ public class ObjectsProcessing {
 		request.setHeader("Content-Type", CONTENT_TYPE);
 		request.removeHeaders("Authorization");
 		request.addHeader("Authorization", refreshToken());
-		CloseableHttpClient client = HttpClientBuilder.create().build();
-		CloseableHttpResponse response = null;
-		try {
-			response = client.execute(request);
+
+		try (CloseableHttpResponse response = executeRequest(request)) {
+
+			return response;
 
 		} catch (IOException e) {
 			StringBuilder sb = new StringBuilder();
@@ -566,7 +509,7 @@ public class ObjectsProcessing {
 					.append(e.getLocalizedMessage());
 			throw new ConnectorIOException(sb.toString(), e);
 		}
-		return response;
+
 	}
 
 }

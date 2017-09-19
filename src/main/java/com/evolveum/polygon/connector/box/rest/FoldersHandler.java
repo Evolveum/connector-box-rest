@@ -65,7 +65,8 @@ public class FoldersHandler extends ObjectsProcessing {
 	private static final String ATTR_SL_ACCESS = "shared_link.access";
 	private static final String ATTR_SL_PASSWORD = "shared_link.password";
 	private static final String ATTR_SL_UNSHARED = "shared_link.unshared_at";
-	//private static final String ATTR_SL_PERMISSIONS = "shared_link.permissions";
+	// private static final String ATTR_SL_PERMISSIONS =
+	// "shared_link.permissions";
 	private static final String ATTR_SL_PER_DOWNLOAD = "shared_link.permissions.can_download";
 	private static final String ATTR_SL_PER_PREVIEW = "shared_link.permissions.can_preview";
 	private static final String ATTR_SL_URL = "shared_link.url";
@@ -82,7 +83,7 @@ public class FoldersHandler extends ObjectsProcessing {
 	private static final String ATTR_PARENT_ETAG = "parent.etag";
 	private static final String ATTR_ITEM_STATUS = "item";
 	private static final String ATTR_ITEM_COLLECTION_ENTRIES = "item_collection.entries";
-	
+
 	private static final String PATH = "path_collection";
 	private static final String CREATED = "created_by";
 	private static final String MODIFIED = "modified_by";
@@ -97,9 +98,6 @@ public class FoldersHandler extends ObjectsProcessing {
 	private static final String UID = "id";
 	private static final String FOLDER_NAME = "Folders";
 	private static final String CRUD_FOLDER = "/2.0/folders";
-	
-
-	
 
 	public ObjectClassInfo getFoldersSchema() {
 
@@ -130,7 +128,7 @@ public class FoldersHandler extends ObjectsProcessing {
 		attrDesc.setReadable(true);
 		attrDesc.setUpdateable(true);
 		builder.addAttributeInfo(attrDesc.build());
-		
+
 		AttributeInfoBuilder attrSlAccess = new AttributeInfoBuilder(ATTR_SL_ACCESS);
 		attrSlAccess.setRequired(false);
 		attrSlAccess.setMultiValued(false);
@@ -138,7 +136,7 @@ public class FoldersHandler extends ObjectsProcessing {
 		attrSlAccess.setReadable(true);
 		attrSlAccess.setUpdateable(true);
 		builder.addAttributeInfo(attrSlAccess.build());
-		
+
 		AttributeInfoBuilder attrSlPassword = new AttributeInfoBuilder(ATTR_SL_PASSWORD);
 		attrSlPassword.setRequired(false);
 		attrSlPassword.setMultiValued(false);
@@ -146,7 +144,7 @@ public class FoldersHandler extends ObjectsProcessing {
 		attrSlPassword.setReadable(true);
 		attrSlPassword.setUpdateable(true);
 		builder.addAttributeInfo(attrSlPassword.build());
-		
+
 		AttributeInfoBuilder attrSlUnshared = new AttributeInfoBuilder(ATTR_SL_UNSHARED, Integer.class);
 		attrSlUnshared.setRequired(false);
 		attrSlUnshared.setMultiValued(false);
@@ -154,7 +152,7 @@ public class FoldersHandler extends ObjectsProcessing {
 		attrSlUnshared.setReadable(true);
 		attrSlUnshared.setUpdateable(true);
 		builder.addAttributeInfo(attrSlUnshared.build());
-		
+
 		AttributeInfoBuilder attrSlPerDownload = new AttributeInfoBuilder(ATTR_SL_PER_DOWNLOAD, Boolean.class);
 		attrSlPerDownload.setRequired(false);
 		attrSlPerDownload.setMultiValued(false);
@@ -162,7 +160,7 @@ public class FoldersHandler extends ObjectsProcessing {
 		attrSlPerDownload.setReadable(true);
 		attrSlPerDownload.setUpdateable(true);
 		builder.addAttributeInfo(attrSlPerDownload.build());
-		
+
 		AttributeInfoBuilder attrSlPerPreview = new AttributeInfoBuilder(ATTR_SL_PER_PREVIEW, Boolean.class);
 		attrSlPerPreview.setRequired(false);
 		attrSlPerPreview.setMultiValued(false);
@@ -170,7 +168,7 @@ public class FoldersHandler extends ObjectsProcessing {
 		attrSlPerPreview.setReadable(true);
 		attrSlPerPreview.setUpdateable(false);
 		builder.addAttributeInfo(attrSlPerPreview.build());
-				
+
 		AttributeInfoBuilder attrNonOwnersInvite = new AttributeInfoBuilder(ATTR_NONOWNERS_INVITE);
 		attrNonOwnersInvite.setRequired(false);
 		attrNonOwnersInvite.setMultiValued(false);
@@ -178,7 +176,7 @@ public class FoldersHandler extends ObjectsProcessing {
 		attrNonOwnersInvite.setReadable(true);
 		attrNonOwnersInvite.setUpdateable(true);
 		builder.addAttributeInfo(attrNonOwnersInvite.build());
-								
+
 		AttributeInfoBuilder attrSyncState = new AttributeInfoBuilder(ATTR_SYNC_STATE);
 		attrSyncState.setRequired(false);
 		attrSyncState.setMultiValued(false);
@@ -186,7 +184,7 @@ public class FoldersHandler extends ObjectsProcessing {
 		attrSyncState.setReadable(true);
 		attrSyncState.setUpdateable(true);
 		builder.addAttributeInfo(attrSyncState.build());
-		
+
 		AttributeInfoBuilder attrTags = new AttributeInfoBuilder(ATTR_TAGS);
 		attrTags.setRequired(false);
 		attrTags.setMultiValued(false);
@@ -194,7 +192,7 @@ public class FoldersHandler extends ObjectsProcessing {
 		attrTags.setReadable(true);
 		attrTags.setUpdateable(true);
 		builder.addAttributeInfo(attrTags.build());
-		
+
 		AttributeInfoBuilder attrSequenceID = new AttributeInfoBuilder(ATTR_SEQUENCE_ID);
 		attrSequenceID.setRequired(false);
 		attrSequenceID.setMultiValued(false);
@@ -210,7 +208,7 @@ public class FoldersHandler extends ObjectsProcessing {
 		attrEtag.setReadable(true);
 		attrEtag.setUpdateable(false);
 		builder.addAttributeInfo(attrEtag.build());
-		
+
 		AttributeInfoBuilder attrCreated = new AttributeInfoBuilder(ATTR_CREATED);
 		attrCreated.setRequired(false);
 		attrCreated.setMultiValued(false);
@@ -218,7 +216,7 @@ public class FoldersHandler extends ObjectsProcessing {
 		attrCreated.setReadable(true);
 		attrCreated.setUpdateable(false);
 		builder.addAttributeInfo(attrCreated.build());
-		
+
 		AttributeInfoBuilder attrModified = new AttributeInfoBuilder(ATTR_MODIFIED);
 		attrModified.setRequired(false);
 		attrModified.setMultiValued(false);
@@ -226,7 +224,7 @@ public class FoldersHandler extends ObjectsProcessing {
 		attrModified.setReadable(true);
 		attrModified.setUpdateable(false);
 		builder.addAttributeInfo(attrModified.build());
-		
+
 		AttributeInfoBuilder attrSize = new AttributeInfoBuilder(ATTR_SIZE, Integer.class);
 		attrSize.setRequired(false);
 		attrSize.setMultiValued(false);
@@ -234,7 +232,7 @@ public class FoldersHandler extends ObjectsProcessing {
 		attrSize.setReadable(true);
 		attrSize.setUpdateable(false);
 		builder.addAttributeInfo(attrSize.build());
-		
+
 		AttributeInfoBuilder attrPCTotalCount = new AttributeInfoBuilder(ATTR_PC_TOTAL_COUNT);
 		attrPCTotalCount.setRequired(false);
 		attrPCTotalCount.setMultiValued(false);
@@ -242,7 +240,7 @@ public class FoldersHandler extends ObjectsProcessing {
 		attrPCTotalCount.setReadable(true);
 		attrPCTotalCount.setUpdateable(false);
 		builder.addAttributeInfo(attrPCTotalCount.build());
-		
+
 		AttributeInfoBuilder attrPCEntries = new AttributeInfoBuilder(ATTR_PC_ENTRIES);
 		attrPCEntries.setRequired(false);
 		attrPCEntries.setMultiValued(true);
@@ -250,7 +248,7 @@ public class FoldersHandler extends ObjectsProcessing {
 		attrPCEntries.setReadable(true);
 		attrPCEntries.setUpdateable(false);
 		builder.addAttributeInfo(attrPCEntries.build());
-		
+
 		AttributeInfoBuilder attrCBType = new AttributeInfoBuilder(ATTR_CB_TYPE);
 		attrCBType.setRequired(false);
 		attrCBType.setMultiValued(false);
@@ -258,7 +256,7 @@ public class FoldersHandler extends ObjectsProcessing {
 		attrCBType.setReadable(true);
 		attrCBType.setUpdateable(false);
 		builder.addAttributeInfo(attrCBType.build());
-		
+
 		AttributeInfoBuilder attrCBId = new AttributeInfoBuilder(ATTR_CB_ID);
 		attrCBId.setRequired(false);
 		attrCBId.setMultiValued(false);
@@ -266,7 +264,7 @@ public class FoldersHandler extends ObjectsProcessing {
 		attrCBId.setReadable(true);
 		attrCBId.setUpdateable(false);
 		builder.addAttributeInfo(attrCBId.build());
-		
+
 		AttributeInfoBuilder attrCBName = new AttributeInfoBuilder(ATTR_CB_NAME);
 		attrCBName.setRequired(false);
 		attrCBName.setMultiValued(false);
@@ -274,7 +272,7 @@ public class FoldersHandler extends ObjectsProcessing {
 		attrCBName.setReadable(true);
 		attrCBName.setUpdateable(false);
 		builder.addAttributeInfo(attrCBName.build());
-		
+
 		AttributeInfoBuilder attrCBLogin = new AttributeInfoBuilder(ATTR_CB_LOGIN);
 		attrCBLogin.setRequired(false);
 		attrCBLogin.setMultiValued(false);
@@ -282,7 +280,7 @@ public class FoldersHandler extends ObjectsProcessing {
 		attrCBLogin.setReadable(true);
 		attrCBLogin.setUpdateable(false);
 		builder.addAttributeInfo(attrCBLogin.build());
-		
+
 		AttributeInfoBuilder attrMBType = new AttributeInfoBuilder(ATTR_MB_TYPE);
 		attrMBType.setRequired(false);
 		attrMBType.setMultiValued(false);
@@ -290,7 +288,7 @@ public class FoldersHandler extends ObjectsProcessing {
 		attrMBType.setReadable(true);
 		attrMBType.setUpdateable(false);
 		builder.addAttributeInfo(attrMBType.build());
-		
+
 		AttributeInfoBuilder attrMBId = new AttributeInfoBuilder(ATTR_MB_ID);
 		attrMBId.setRequired(false);
 		attrMBId.setMultiValued(false);
@@ -298,7 +296,7 @@ public class FoldersHandler extends ObjectsProcessing {
 		attrMBId.setReadable(true);
 		attrMBId.setUpdateable(false);
 		builder.addAttributeInfo(attrMBId.build());
-		
+
 		AttributeInfoBuilder attrMBLogin = new AttributeInfoBuilder(ATTR_MB_LOGIN);
 		attrMBLogin.setRequired(false);
 		attrMBLogin.setMultiValued(false);
@@ -306,7 +304,7 @@ public class FoldersHandler extends ObjectsProcessing {
 		attrMBLogin.setReadable(true);
 		attrMBLogin.setUpdateable(false);
 		builder.addAttributeInfo(attrMBLogin.build());
-		
+
 		AttributeInfoBuilder attrMBName = new AttributeInfoBuilder(ATTR_MB_NAME);
 		attrMBName.setRequired(false);
 		attrMBName.setMultiValued(false);
@@ -314,7 +312,7 @@ public class FoldersHandler extends ObjectsProcessing {
 		attrMBName.setReadable(true);
 		attrMBName.setUpdateable(false);
 		builder.addAttributeInfo(attrMBName.build());
-		
+
 		AttributeInfoBuilder attrOBType = new AttributeInfoBuilder(ATTR_OB_TYPE);
 		attrOBType.setRequired(false);
 		attrOBType.setMultiValued(false);
@@ -322,7 +320,7 @@ public class FoldersHandler extends ObjectsProcessing {
 		attrOBType.setReadable(true);
 		attrOBType.setUpdateable(false);
 		builder.addAttributeInfo(attrOBType.build());
-		
+
 		AttributeInfoBuilder attrOBId = new AttributeInfoBuilder(ATTR_OB_ID);
 		attrOBId.setRequired(false);
 		attrOBId.setMultiValued(false);
@@ -330,7 +328,7 @@ public class FoldersHandler extends ObjectsProcessing {
 		attrOBId.setReadable(true);
 		attrOBId.setUpdateable(false);
 		builder.addAttributeInfo(attrOBId.build());
-		
+
 		AttributeInfoBuilder attrOBLogin = new AttributeInfoBuilder(ATTR_OB_LOGIN);
 		attrOBLogin.setRequired(false);
 		attrOBLogin.setMultiValued(false);
@@ -338,7 +336,7 @@ public class FoldersHandler extends ObjectsProcessing {
 		attrOBLogin.setReadable(true);
 		attrOBLogin.setUpdateable(false);
 		builder.addAttributeInfo(attrOBLogin.build());
-		
+
 		AttributeInfoBuilder attrOBName = new AttributeInfoBuilder(ATTR_OB_NAME);
 		attrOBName.setRequired(false);
 		attrOBName.setMultiValued(false);
@@ -346,7 +344,7 @@ public class FoldersHandler extends ObjectsProcessing {
 		attrOBName.setReadable(true);
 		attrOBName.setUpdateable(false);
 		builder.addAttributeInfo(attrOBName.build());
-		
+
 		AttributeInfoBuilder attrSLUrl = new AttributeInfoBuilder(ATTR_SL_URL);
 		attrSLUrl.setRequired(false);
 		attrSLUrl.setMultiValued(false);
@@ -354,7 +352,7 @@ public class FoldersHandler extends ObjectsProcessing {
 		attrSLUrl.setReadable(true);
 		attrSLUrl.setUpdateable(false);
 		builder.addAttributeInfo(attrSLUrl.build());
-		
+
 		AttributeInfoBuilder attrSLDownUrl = new AttributeInfoBuilder(ATTR_SL_DOWN_URL);
 		attrSLDownUrl.setRequired(false);
 		attrSLDownUrl.setMultiValued(false);
@@ -362,7 +360,7 @@ public class FoldersHandler extends ObjectsProcessing {
 		attrSLDownUrl.setReadable(true);
 		attrSLDownUrl.setUpdateable(false);
 		builder.addAttributeInfo(attrSLDownUrl.build());
-		
+
 		AttributeInfoBuilder attrSLVanityUrl = new AttributeInfoBuilder(ATTR_SL_VANITY_URL);
 		attrSLVanityUrl.setRequired(false);
 		attrSLVanityUrl.setMultiValued(false);
@@ -370,7 +368,7 @@ public class FoldersHandler extends ObjectsProcessing {
 		attrSLVanityUrl.setReadable(true);
 		attrSLVanityUrl.setUpdateable(false);
 		builder.addAttributeInfo(attrSLVanityUrl.build());
-		
+
 		AttributeInfoBuilder attrSLPsswdEnabl = new AttributeInfoBuilder(ATTR_SL_PSSW_ENABLED, Boolean.class);
 		attrSLPsswdEnabl.setRequired(false);
 		attrSLPsswdEnabl.setMultiValued(false);
@@ -378,7 +376,7 @@ public class FoldersHandler extends ObjectsProcessing {
 		attrSLPsswdEnabl.setReadable(true);
 		attrSLPsswdEnabl.setUpdateable(false);
 		builder.addAttributeInfo(attrSLPsswdEnabl.build());
-		
+
 		AttributeInfoBuilder attrSLDownCount = new AttributeInfoBuilder(ATTR_SL_DOWN_COUNT);
 		attrSLDownCount.setRequired(false);
 		attrSLDownCount.setMultiValued(false);
@@ -386,7 +384,7 @@ public class FoldersHandler extends ObjectsProcessing {
 		attrSLDownCount.setReadable(true);
 		attrSLDownCount.setUpdateable(false);
 		builder.addAttributeInfo(attrSLDownCount.build());
-		
+
 		AttributeInfoBuilder attrSLPrevCount = new AttributeInfoBuilder(ATTR_SL_PREV_COUNT);
 		attrSLPrevCount.setRequired(false);
 		attrSLPrevCount.setMultiValued(false);
@@ -394,7 +392,7 @@ public class FoldersHandler extends ObjectsProcessing {
 		attrSLPrevCount.setReadable(true);
 		attrSLPrevCount.setUpdateable(false);
 		builder.addAttributeInfo(attrSLPrevCount.build());
-		
+
 		AttributeInfoBuilder attrFUEAccess = new AttributeInfoBuilder(ATTR_FUE_ACCESS);
 		attrFUEAccess.setRequired(false);
 		attrFUEAccess.setMultiValued(false);
@@ -402,7 +400,7 @@ public class FoldersHandler extends ObjectsProcessing {
 		attrFUEAccess.setReadable(true);
 		attrFUEAccess.setUpdateable(false);
 		builder.addAttributeInfo(attrFUEAccess.build());
-		
+
 		AttributeInfoBuilder attrFUEEmail = new AttributeInfoBuilder(ATTR_FUE_EMAIL);
 		attrFUEEmail.setRequired(false);
 		attrFUEEmail.setMultiValued(false);
@@ -410,7 +408,7 @@ public class FoldersHandler extends ObjectsProcessing {
 		attrFUEEmail.setReadable(true);
 		attrFUEEmail.setUpdateable(false);
 		builder.addAttributeInfo(attrFUEEmail.build());
-		
+
 		AttributeInfoBuilder attrParentSeqId = new AttributeInfoBuilder(ATTR_PARENT_SEQUENCE_ID);
 		attrParentSeqId.setRequired(false);
 		attrParentSeqId.setMultiValued(false);
@@ -418,7 +416,7 @@ public class FoldersHandler extends ObjectsProcessing {
 		attrParentSeqId.setReadable(true);
 		attrParentSeqId.setUpdateable(false);
 		builder.addAttributeInfo(attrParentSeqId.build());
-		
+
 		AttributeInfoBuilder attrParentEtag = new AttributeInfoBuilder(ATTR_PARENT_ETAG);
 		attrParentEtag.setRequired(false);
 		attrParentEtag.setMultiValued(false);
@@ -426,7 +424,7 @@ public class FoldersHandler extends ObjectsProcessing {
 		attrParentEtag.setReadable(true);
 		attrParentEtag.setUpdateable(false);
 		builder.addAttributeInfo(attrParentEtag.build());
-		
+
 		AttributeInfoBuilder attrItemStatus = new AttributeInfoBuilder(ATTR_ITEM_STATUS);
 		attrItemStatus.setRequired(false);
 		attrItemStatus.setMultiValued(false);
@@ -434,7 +432,7 @@ public class FoldersHandler extends ObjectsProcessing {
 		attrItemStatus.setReadable(true);
 		attrItemStatus.setUpdateable(false);
 		builder.addAttributeInfo(attrItemStatus.build());
-		
+
 		AttributeInfoBuilder attrItemCollectionEntries = new AttributeInfoBuilder(ATTR_ITEM_COLLECTION_ENTRIES);
 		attrItemCollectionEntries.setRequired(false);
 		attrItemCollectionEntries.setMultiValued(true);
@@ -442,7 +440,6 @@ public class FoldersHandler extends ObjectsProcessing {
 		attrItemCollectionEntries.setReadable(true);
 		attrItemCollectionEntries.setUpdateable(false);
 		builder.addAttributeInfo(attrItemCollectionEntries.build());
-		
 
 		ObjectClassInfo foldersSchemaInfo = builder.build();
 		LOGGER.info("The constructed folders schema representation: {0}", foldersSchemaInfo);
@@ -480,7 +477,6 @@ public class FoldersHandler extends ObjectsProcessing {
 			handlerJson(handler, new Uid("0"));
 
 		} else if (configuration.isEnableFilteredResultsHandler()) {
-			LOGGER.info("FOLDER EXEC QUERY", " ");
 			handlerJson(handler, new Uid("0"));
 
 		} else {
@@ -535,44 +531,6 @@ public class FoldersHandler extends ObjectsProcessing {
 
 	}
 
-	/*
-	 * private boolean substringFiltering(ResultsHandler handler,
-	 * OperationOptions options, String attrName, String subValue, Uid uid) {
-	 * URI uri = null; URIBuilder uriBuilder = getURIBuilder();
-	 * uriBuilder.setPath(CRUD_FOLDER + "/" + uid.getUidValue().toString()); try
-	 * { uri = uriBuilder.build();
-	 * 
-	 * } catch (URISyntaxException e) { StringBuilder sb = new StringBuilder();
-	 * sb.append("It is not possible to create URI from URIBuilder:").append(
-	 * getURIBuilder().toString()) .append(";").append(e.getLocalizedMessage());
-	 * throw new ConnectorException(sb.toString(), e); } HttpGet request = new
-	 * HttpGet(uri); JSONObject result = callRequest(request, true); if
-	 * (result.has("item_collection")) { JSONObject collection =
-	 * result.getJSONObject("item_collection"); JSONArray array =
-	 * collection.getJSONArray("entries"); for (int i = 0; i < array.length();
-	 * i++) { JSONObject folder = array.getJSONObject(i);
-	 * substringFiltering(handler, options, attrName, subValue, new
-	 * Uid(String.valueOf(folder.get("id")))); if (!folder.has(attrName)) {
-	 * LOGGER.warn("\n\tProcessing JSON Object does not contain attribute {0}.",
-	 * attrName); return false; }
-	 * 
-	 * if (folder.has(attrName) &&
-	 * (folder.get(attrName)).toString().contains(subValue)) {
-	 * 
-	 * ConnectorObject connectorObject = convertToConnectorObject(folder);
-	 * boolean finish = !handler.handle(connectorObject); if (finish) { return
-	 * true; } }
-	 * 
-	 * } return false; } else { if (!result.has(attrName)) {
-	 * LOGGER.warn("\n\tProcessing JSON Object does not contain attribute {0}.",
-	 * attrName); return false; } if (result.has(attrName) &&
-	 * (result.get(attrName)).toString().contains(subValue)) { ConnectorObject
-	 * connectorObject = convertToConnectorObject(result); boolean finish =
-	 * !handler.handle(connectorObject); if (finish) { return true; } }
-	 * 
-	 * } return false; }
-	 */
-
 	public void delete(ObjectClass objectClass, Uid uid, OperationOptions operationOptions) {
 
 		if (uid == null) {
@@ -613,7 +571,7 @@ public class FoldersHandler extends ObjectsProcessing {
 		JSONObject sharedPermission = new JSONObject();
 		URIBuilder uriBuilder = getURIBuilder();
 		String parentId = null;
-		
+
 		String name = getStringAttr(attributes, "__NAME__");
 		if (create && StringUtil.isBlank(name)) {
 			throw new InvalidAttributeValueException("Missing mandatory attribute " + ATTR_NAME);
@@ -623,20 +581,19 @@ public class FoldersHandler extends ObjectsProcessing {
 			json.put(ATTR_NAME, name);
 		}
 
-		if (create && StringUtil.isBlank(parentId = getAttr(attributes, ATTR_PARENT_ID, String.class, null))){
+		if (create && StringUtil.isBlank(parentId = getAttr(attributes, ATTR_PARENT_ID, String.class, null))) {
 			throw new InvalidAttributeValueException("Missing mandatory attribute " + ATTR_PARENT_ID);
-		} else 
+		} else
 			jsonParent.put("id", parentId);
-			json.put(ATTR_PARENT, jsonParent);
-		
-			LOGGER.info("json {0}", json);
+		json.put(ATTR_PARENT, jsonParent);
+
 		putChildFieldIfExists(attributes, "access", ATTR_SL_ACCESS, String.class, jsonSharedLink);
 		putChildFieldIfExists(attributes, "password", ATTR_SL_PASSWORD, String.class, jsonSharedLink);
 		putChildFieldIfExists(attributes, "unshared_at", ATTR_SL_UNSHARED, Integer.class, jsonSharedLink);
 		putChildFieldIfExists(attributes, "can_download", ATTR_SL_PER_DOWNLOAD, Boolean.class, sharedPermission);
 		putChildFieldIfExists(attributes, "access", ATTR_FUE_ACCESS, String.class, jsonFolderUpload);
-		putChildFieldIfExists(attributes, "id", ATTR_OB_ID, String.class, jsonOwnedBy);	
-		
+		putChildFieldIfExists(attributes, "id", ATTR_OB_ID, String.class, jsonOwnedBy);
+
 		if (sharedPermission != null && (sharedPermission.length()) > 0) {
 			jsonSharedLink.put("permissions", sharedPermission);
 		}
@@ -656,12 +613,11 @@ public class FoldersHandler extends ObjectsProcessing {
 
 		HttpEntityEnclosingRequestBase request = null;
 		URI uri = null;
-		
+
 		if (create) {
 			uriBuilder.setPath(CRUD_FOLDER);
 			try {
 				uri = uriBuilder.build();
-				LOGGER.info("URI {0}", uri);
 			} catch (URISyntaxException e) {
 				StringBuilder sb = new StringBuilder();
 				sb.append("It is not possible to create URI from URIBuilder:").append(getURIBuilder().toString())
@@ -686,7 +642,6 @@ public class FoldersHandler extends ObjectsProcessing {
 		JSONObject jsonReq = callRequest(request, json);
 
 		String newFid = jsonReq.getString(UID);
-		LOGGER.ok("UID {0}", newFid);
 
 		return new Uid(newFid);
 
@@ -765,9 +720,10 @@ public class FoldersHandler extends ObjectsProcessing {
 				jsonSharedLink = (JSONObject) json.get(SHARED);
 			}
 			if (jsonSharedLink.has(PERMISSIONS)) {
-				if (jsonSharedLink.get(PERMISSIONS) != null && !JSONObject.NULL.equals(jsonSharedLink.get(PERMISSIONS))) {
+				if (jsonSharedLink.get(PERMISSIONS) != null
+						&& !JSONObject.NULL.equals(jsonSharedLink.get(PERMISSIONS))) {
 					jsonSharedLinkPermissions = (JSONObject) jsonSharedLink.get(PERMISSIONS);
-					
+
 				}
 
 			}
@@ -778,7 +734,8 @@ public class FoldersHandler extends ObjectsProcessing {
 				jsonItemCollection = (JSONObject) json.get(COLLECTION);
 			}
 			if (jsonItemCollection.has(ENTRIES)) {
-				if (jsonItemCollection.get(ENTRIES) != null && !JSONObject.NULL.equals(jsonItemCollection.get(ENTRIES))) {
+				if (jsonItemCollection.get(ENTRIES) != null
+						&& !JSONObject.NULL.equals(jsonItemCollection.get(ENTRIES))) {
 					jsonCollectionEntries = (JSONArray) jsonItemCollection.get(ENTRIES);
 					builder.addAttribute(ATTR_ITEM_COLLECTION_ENTRIES, jsonCollectionEntries.toString());
 				}
@@ -817,21 +774,17 @@ public class FoldersHandler extends ObjectsProcessing {
 		getIfExists(jsonSharedLink, "download_count", ATTR_SL_DOWN_COUNT, builder);
 		getIfExists(jsonSharedLink, "preview_count", ATTR_SL_PREV_COUNT, builder);
 		getIfExists(jsonSharedLink, "access", ATTR_SL_ACCESS, builder);
-		getIfExists(jsonSharedLinkPermissions, "can_download",  ATTR_SL_PER_DOWNLOAD, builder);
-		getIfExists(jsonSharedLinkPermissions, "can_preview",  ATTR_SL_PER_PREVIEW, builder);
+		getIfExists(jsonSharedLinkPermissions, "can_download", ATTR_SL_PER_DOWNLOAD, builder);
+		getIfExists(jsonSharedLinkPermissions, "can_preview", ATTR_SL_PER_PREVIEW, builder);
 		getIfExists(jsonParentName, UID, ATTR_PARENT_ID, builder);
 		getIfExists(jsonParentName, "sequence_id", ATTR_SEQUENCE_ID, builder);
 		getIfExists(jsonParentName, "etag", ATTR_ETAG, builder);
 		getIfExists(jsonParentName, ATTR_NAME, ATTR_PARENT_NAME, builder);
-		
-		
-		LOGGER.info("FOLDER ID {0}", json.getString(UID));
+
 		ConnectorObject connectorObject = builder.build();
 		LOGGER.ok("convertUserToConnectorObject,\n\tconnectorObject: {0}", connectorObject);
 		return connectorObject;
 
 	}
-
-	
 
 }

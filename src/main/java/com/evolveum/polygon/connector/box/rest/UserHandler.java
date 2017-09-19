@@ -215,14 +215,6 @@ public class UserHandler extends ObjectsProcessing {
 		attrCollab.setUpdateable(true);
 		attrCollab.setReturnedByDefault(false);
 		ocBuilder.addAttributeInfo(attrCollab.build());
-		// status
-//		AttributeInfoBuilder attrStatus = new AttributeInfoBuilder(ATTR_STATUS);
-//		attrStatus.setRequired(false);
-//		attrStatus.setMultiValued(false);
-//		attrStatus.setCreateable(true);
-//		attrStatus.setReadable(true);
-//		attrStatus.setUpdateable(true);
-//		ocBuilder.addAttributeInfo(attrStatus.build());
 		// enterprise
 		AttributeInfoBuilder attrEnterpise = new AttributeInfoBuilder(ATTR_ENTERPRISE);
 		attrEnterpise.setRequired(false);
@@ -298,8 +290,6 @@ public class UserHandler extends ObjectsProcessing {
 		int usersPerPage = 0;
 		int offset = 0;
 
-		LOGGER.info("ResultsHandler {0} ", configuration.isEnableFilteredResultsHandler());
-
 		if (query instanceof StartsWithFilter && ((StartsWithFilter) query).getAttribute() instanceof Name) {
 			name = (Name) ((StartsWithFilter) query).getAttribute();
 
@@ -352,31 +342,6 @@ public class UserHandler extends ObjectsProcessing {
 
 			}
 
-			/*
-			 * } else if (query instanceof ContainsFilter && ((ContainsFilter)
-			 * query).getAttribute() instanceof Name) { name = (Name)
-			 * ((StartsWithFilter) query).getAttribute();
-			 * 
-			 * if (name != null) { uriBuilder.setPath(CRUD);
-			 * uriBuilder.addParameter(FILTERTERM, name.getNameValue()); if
-			 * (options != null) { if ((options.getPageSize()) != null) {
-			 * usersPerPage = options.getPageSize();
-			 * uriBuilder.addParameter(LIMIT, String.valueOf(usersPerPage)); if
-			 * (options.getPagedResultsOffset() != null) { pageNumber =
-			 * options.getPagedResultsOffset(); offset = (pageNumber *
-			 * usersPerPage) - usersPerPage; uriBuilder.addParameter(OFFSET,
-			 * String.valueOf(offset)); } } } try { uri = uriBuilder.build(); }
-			 * catch (URISyntaxException e) { StringBuilder sb = new
-			 * StringBuilder();
-			 * sb.append("It is not possible to create URI from URIBuilder:").
-			 * append(getURIBuilder().toString())
-			 * .append(";").append(e.getLocalizedMessage()); throw new
-			 * ConnectorException(sb.toString(), e); } HttpGet request = new
-			 * HttpGet(uri); handleUsers(request, handler, query, options);
-			 * 
-			 * }
-			 */
-
 		} else if (query == null && objectClass.is(ObjectClass.ACCOUNT_NAME)) {
 			uriBuilder.setPath(CRUD);
 			if (options != null) {
@@ -402,8 +367,6 @@ public class UserHandler extends ObjectsProcessing {
 			handleUsers(request, handler, query, options);
 
 		} else if (configuration.isEnableFilteredResultsHandler() == true) {
-
-			LOGGER.info("ResultsHandler {0} ", configuration.isEnableFilteredResultsHandler());
 
 			uriBuilder.setPath(CRUD);
 
@@ -436,13 +399,11 @@ public class UserHandler extends ObjectsProcessing {
 		}
 
 		JSONObject result = callRequest(request);
-		LOGGER.info("Result {0}", result.toString());
 		JSONArray users = result.getJSONArray("entries");
 
 		for (int i = 0; i < users.length(); i++) {
 
 			JSONObject user = users.getJSONObject(i);
-			LOGGER.info("USER {0}", user.toString());
 			ConnectorObject connectorObject = convertToConnectorObject(user, filter);
 			finish = !handler.handle(connectorObject);
 
@@ -460,7 +421,6 @@ public class UserHandler extends ObjectsProcessing {
 			throw new InvalidAttributeValueException("uid not provided");
 		}
 
-		LOGGER.ok("delete user, Uid: {0}", uid);
 		HttpDelete request;
 		URI uri = null;
 		URIBuilder uriBuilder = getURIBuilder();
@@ -482,7 +442,7 @@ public class UserHandler extends ObjectsProcessing {
 		if (attributes == null || attributes.isEmpty()) {
 			throw new InvalidAttributeValueException("attributes not provided or empty");
 		}
-		
+
 		boolean create = uid == null;
 		JSONObject json = new JSONObject();
 		URIBuilder uriBuilder = getURIBuilder();
@@ -504,34 +464,33 @@ public class UserHandler extends ObjectsProcessing {
 		}
 		if ((getAttr(attributes, OperationalAttributes.ENABLE_NAME, Boolean.class)) != null) {
 			Boolean status = getAttr(attributes, OperationalAttributes.ENABLE_NAME, Boolean.class);
-		if (status){
-			json.put(ATTR_STATUS, "active");
+			if (status) {
+				json.put(ATTR_STATUS, "active");
+			} else {
+				json.put(ATTR_STATUS, "inactive");
+			}
 		}
-		else {
-			json.put(ATTR_STATUS, "inactive");
-		}
-		}
-		
+
 		putFieldIfExists(attributes, ATTR_ID, String.class, json);
-		putFieldIfExists(attributes, ATTR_ROLE, String.class,json);
-		putFieldIfExists(attributes, ATTR_LANGUAGE, String.class,json);
+		putFieldIfExists(attributes, ATTR_ROLE, String.class, json);
+		putFieldIfExists(attributes, ATTR_LANGUAGE, String.class, json);
 		putFieldIfExists(attributes, ATTR_SYNC, Boolean.class, json);
-		putFieldIfExists(attributes, ATTR_TITLE, String.class,json);
-		putFieldIfExists(attributes, ATTR_PHONE, String.class,json);
-		putFieldIfExists(attributes, ATTR_ADDRESS, String.class,json);
+		putFieldIfExists(attributes, ATTR_TITLE, String.class, json);
+		putFieldIfExists(attributes, ATTR_PHONE, String.class, json);
+		putFieldIfExists(attributes, ATTR_ADDRESS, String.class, json);
 		putFieldIfExists(attributes, ATTR_SPACE, Integer.class, json);
 		putFieldIfExists(attributes, ATTR_MANAGED, Boolean.class, json);
-		putFieldIfExists(attributes, ATTR_TIMEZONE, String.class,json);
-		putFieldIfExists(attributes, ATTR_DEVICELIMITS, String.class,json);
+		putFieldIfExists(attributes, ATTR_TIMEZONE, String.class, json);
+		putFieldIfExists(attributes, ATTR_DEVICELIMITS, String.class, json);
 		putFieldIfExists(attributes, ATTR_LOGINVERIFICATION, Boolean.class, json);
-		putFieldIfExists(attributes, ATTR_COLLAB, Boolean.class,json);
+		putFieldIfExists(attributes, ATTR_COLLAB, Boolean.class, json);
 		putFieldIfExists(attributes, ATTR_NOTIFY, Boolean.class, json);
-		putFieldIfExists(attributes, ATTR_ENTERPRISE, String.class,json);
+		putFieldIfExists(attributes, ATTR_ENTERPRISE, String.class, json);
 		putFieldIfExists(attributes, ATTR_PSSWD, Boolean.class, json);
 		putFieldIfExists(attributes, ATTR_CODE, String.class, json);
 		HttpEntityEnclosingRequestBase request = null;
 		URI uri = null;
-		
+
 		if (create) {
 			uriBuilder.setPath(CRUD);
 			try {
@@ -562,7 +521,6 @@ public class UserHandler extends ObjectsProcessing {
 
 		String newUid = jsonReq.getString(UID);
 
-		LOGGER.ok("UID {0}", newUid);
 		return new Uid(newUid);
 	}
 
@@ -571,17 +529,16 @@ public class UserHandler extends ObjectsProcessing {
 			throw new InvalidAttributeValueException("UserObject not provided");
 		}
 		ConnectorObjectBuilder builder = new ConnectorObjectBuilder();
-		LOGGER.info("JSON: {0}", json.toString());
 		builder.setUid(new Uid(json.getString(UID)));
 		if (json.has(ATTR_NAME)) {
 			builder.setName(json.getString(ATTR_NAME));
 		}
-		
+
 		if (json.has(ATTR_STATUS)) {
 			if (json.get(ATTR_STATUS) != null && !JSONObject.NULL.equals(json.get(ATTR_STATUS))) {
-				if(json.get(ATTR_STATUS).equals("active")){
+				if (json.get(ATTR_STATUS).equals("active")) {
 					addAttr(builder, OperationalAttributes.ENABLE_NAME, true);
-				} else if(json.get(ATTR_STATUS).equals("inactive")) {
+				} else if (json.get(ATTR_STATUS).equals("inactive")) {
 					addAttr(builder, OperationalAttributes.ENABLE_NAME, false);
 				}
 			}
@@ -606,7 +563,7 @@ public class UserHandler extends ObjectsProcessing {
 
 			getAvatarPhoto(json, builder, AVATAR);
 			String[] memberships = getUserMemberships(json.getString(UID));
-			if(memberships.length > 0){
+			if (memberships.length > 0) {
 				builder.addAttribute(ATTR_MEMBERSHIPS, getUserMemberships(json.getString(UID)));
 			}
 
@@ -655,12 +612,8 @@ public class UserHandler extends ObjectsProcessing {
 
 				membershipAttr[i] = memInfo.toString();
 
-				LOGGER.info("response body Handle user: {0}", member);
-				LOGGER.info("MemInfo {0}", memInfo.toString());
-
 			}
 		}
-		LOGGER.info("JSON MEMBERSHIPS: {0}", user.toString());
 		return membershipAttr;
 	}
 

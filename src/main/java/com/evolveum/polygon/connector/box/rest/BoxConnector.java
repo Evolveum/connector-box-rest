@@ -16,6 +16,7 @@
 
 package com.evolveum.polygon.connector.box.rest;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -102,8 +103,12 @@ public class BoxConnector implements TestOp, SchemaOp, Connector, DeleteOp, Sear
 		LOG.info("TEST METHOD URI VALUE: {0}", uri);
 		HttpGet request = new HttpGet(uri);
 		ObjectsProcessing objects = new ObjectsProcessing(configuration);
-		CloseableHttpResponse response = objects.executeRequest(request);
-		objects.processResponseErrors(response);
+
+		try (CloseableHttpResponse response = objects.executeRequest(request)) {
+			objects.processResponseErrors(response);
+		} catch (IOException e) {
+			throw new ConnectorIOException();
+		}
 
 	}
 
@@ -186,9 +191,7 @@ public class BoxConnector implements TestOp, SchemaOp, Connector, DeleteOp, Sear
 
 		// StartWithFilter
 		if (query instanceof StartsWithFilter && ((StartsWithFilter) query).getAttribute() instanceof Name) {
-			LOG.info("FOLDER 1: ", "ok");
 			if (objectClass.is(ObjectClass.ACCOUNT_NAME)) {
-				LOG.info("FOLDER 1.1: ", "ok");
 				UserHandler user = new UserHandler(configuration);
 				user.executeQuery(objectClass, query, handler, options);
 			} else if (!configuration.isEnableFilteredResultsHandler()) {
@@ -197,7 +200,6 @@ public class BoxConnector implements TestOp, SchemaOp, Connector, DeleteOp, Sear
 
 			// EqualsFilter
 		} else if (query instanceof EqualsFilter && ((EqualsFilter) query).getAttribute() instanceof Uid) {
-			LOG.info("FOLDER 2: ", "ok");
 			if (objectClass.is(ObjectClass.ACCOUNT_NAME)) {
 				UserHandler user = new UserHandler(configuration);
 				user.executeQuery(objectClass, query, handler, options);
@@ -205,13 +207,11 @@ public class BoxConnector implements TestOp, SchemaOp, Connector, DeleteOp, Sear
 				GroupHandler group = new GroupHandler(configuration);
 				group.executeQuery(objectClass, query, handler, options);
 			} else if (objectClass.is(FOLDER_NAME)) {
-				LOG.info("FOLDER 2: ", "ok");
 				FoldersHandler folder = new FoldersHandler(configuration);
 				folder.executeQuery(objectClass, query, handler, options);
 			}
 
 		} else if (configuration.isEnableFilteredResultsHandler() && query instanceof Filter) {
-			LOG.info("FOLDER 3: ", "ok");
 			if (objectClass.is(ObjectClass.ACCOUNT_NAME)) {
 				UserHandler user = new UserHandler(configuration);
 				user.executeQuery(objectClass, query, handler, options);
@@ -219,7 +219,6 @@ public class BoxConnector implements TestOp, SchemaOp, Connector, DeleteOp, Sear
 				GroupHandler group = new GroupHandler(configuration);
 				group.executeQuery(objectClass, query, handler, options);
 			} else if (objectClass.is(FOLDER_NAME)) {
-				LOG.info("FOLDER 3: ", "ok");
 				FoldersHandler folder = new FoldersHandler(configuration);
 				folder.executeQuery(objectClass, query, handler, options);
 			}
@@ -231,7 +230,6 @@ public class BoxConnector implements TestOp, SchemaOp, Connector, DeleteOp, Sear
 			GroupHandler group = new GroupHandler(configuration);
 			group.executeQuery(objectClass, query, handler, options);
 		} else if (query == null && objectClass.is(FOLDER_NAME)) {
-			LOG.info("FOLDER 4: ", "ok");
 			FoldersHandler folder = new FoldersHandler(configuration);
 			folder.executeQuery(objectClass, query, handler, options);
 		} else {
