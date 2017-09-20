@@ -1,1 +1,1 @@
-# connector-rest-master
+# connector-box-rest
