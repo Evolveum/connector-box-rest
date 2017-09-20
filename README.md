@@ -1,1 +1,1 @@
-# connector-rest-example-master
+# connector-rest-master
