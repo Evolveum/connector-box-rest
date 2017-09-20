@@ -25,7 +25,6 @@ import org.identityconnectors.framework.common.objects.Uid;
 import org.identityconnectors.framework.common.objects.filter.AttributeFilter;
 import org.identityconnectors.framework.common.objects.filter.EqualsFilter;
 import org.identityconnectors.framework.common.objects.filter.FilterBuilder;
-import org.identityconnectors.framework.common.objects.filter.StartsWithFilter;
 import org.identityconnectors.framework.spi.SearchResultsHandler;
 import org.testng.annotations.Test;
 
@@ -36,11 +35,11 @@ public class FolderTests {
 
 	BoxConnectorConfiguration config = new BoxConnectorConfiguration();
 
-	String clientId = "PleaseEnterValue";
-	GuardedString clientSecret = new GuardedString(new String("PleaseEnterValue").toCharArray());
+	String clientId = "4ig3tzk76msrvvvpradguxsxuz7lsuhr";
+	GuardedString clientSecret = new GuardedString(new String("L9SzKgeLU28jFzmmhYEAabqxEWTmcDT4").toCharArray());
 	GuardedString refreshToken = new GuardedString(
-			new String("PleaseEnterValue").toCharArray());
-	GuardedString accessToken = new GuardedString(new String("PleaseEnterValue").toCharArray());
+			new String("7aeRCAC3HSkvy1GsVQbHft4gmFOFZgHuL9DwmYLkWlMjdpBF7ekJchNvUuUkZQ9k").toCharArray());
+	GuardedString accessToken = new GuardedString(new String("XckcHFthaE4jLLrFHaXaTccfKV1YF0Vt").toCharArray());
 	String boxEndpoint = "api.box.com";
 
 	private static final Log LOG = Log.getLog(BoxConnector.class);
@@ -125,7 +124,7 @@ public class FolderTests {
 
 		folderResults.clear();
 		connector.executeQuery(folderObject, eqfilter, handlerFolder, options);
-		
+
 		try {
 			if (!folderResults.get(0).getAttributes().containsAll(folderAttributes)) {
 				throw new InvalidAttributeValueException(
@@ -242,15 +241,6 @@ public class FolderTests {
 	@Test(priority = 5)
 	public void UpdateFolderTest() {
 
-		config.setClientId("4ig3tzk76msrvvvpradguxsxuz7lsuhr");
-		config.setClientSecret(clientSecret);
-		config.setRefreshToken(refreshToken);
-		config.setUri("api.box.com");
-		config.setAccessToken(accessToken);
-		config.setEnableFilteredResultsHandler(true);
-
-		connector.init(config);
-
 		folderAttributes.clear();
 		folderAttributes.add(AttributeBuilder.build("__NAME__", updatedName));
 		folderAttributes.add(AttributeBuilder.build("description", "TESTupdateFOLDERdescription"));
@@ -291,15 +281,6 @@ public class FolderTests {
 
 	@Test(priority = 6)
 	public void equalsUidFilterFolderTest() {
-
-		config.setClientId("4ig3tzk76msrvvvpradguxsxuz7lsuhr");
-		config.setClientSecret(clientSecret);
-		config.setRefreshToken(refreshToken);
-		config.setUri("api.box.com");
-		config.setAccessToken(accessToken);
-		config.setEnableFilteredResultsHandler(true);
-
-		connector.init(config);
 
 		SearchResultsHandler handlerFolder = new SearchResultsHandler() {
 
@@ -342,15 +323,6 @@ public class FolderTests {
 	@Test(priority = 6, expectedExceptions = ConnectorException.class)
 	public void equalsNameFilterFolderTest() {
 
-		config.setClientId("4ig3tzk76msrvvvpradguxsxuz7lsuhr");
-		config.setClientSecret(clientSecret);
-		config.setRefreshToken(refreshToken);
-		config.setUri("api.box.com");
-		config.setAccessToken(accessToken);
-		config.setEnableFilteredResultsHandler(false);
-
-		connector.init(config);
-
 		SearchResultsHandler handlerFolder = new SearchResultsHandler() {
 
 			@Override
@@ -389,67 +361,8 @@ public class FolderTests {
 
 	}
 
-	@Test(priority = 6, expectedExceptions = ConnectorException.class)
-	public void nameStartWithFilterFolderTest() {
-
-		config.setClientId("4ig3tzk76msrvvvpradguxsxuz7lsuhr");
-		config.setClientSecret(clientSecret);
-		config.setRefreshToken(refreshToken);
-		config.setUri("api.box.com");
-		config.setAccessToken(accessToken);
-		config.setEnableFilteredResultsHandler(false);
-
-		connector.init(config);
-
-		SearchResultsHandler handlerFolder = new SearchResultsHandler() {
-
-			@Override
-			public boolean handle(ConnectorObject connectorObject) {
-				folderResults.add(connectorObject);
-				return true;
-			}
-
-			@Override
-			public void handleResult(SearchResult result) {
-				LOG.info("im handling {0}", result.getRemainingPagedResults());
-				LOG.info("pagedResultsCookie,remainingPagedResults,allResultsReturned {0} {1} {2}",
-						result.getPagedResultsCookie(), result.getRemainingPagedResults(),
-						result.isAllResultsReturned());
-
-			}
-		};
-
-		AttributeFilter startNameFilter = (StartsWithFilter) FilterBuilder
-				.startsWith(AttributeBuilder.build(Name.NAME, "Test"));
-
-		folderResults.clear();
-		connector.executeQuery(folderObject, startNameFilter, handlerFolder, options);
-
-		for (int i = 0; i < folderResults.size(); i++) {
-			LOG.info("RESULT: {0}", folderResults.get(i).getAttributes());
-			if (folderResults.get(i).getUid().equals(folderUid)) {
-				LOG.ok("\n-------------------------------------------------------------------------"
-						+ "\n\tPASSED: Attributes of account and searched account CORRESPOND"
-						+ "\n\t-------------------------------------------------------------------------");
-			} else {
-				throw new InvalidAttributeValueException(
-						"Attributes of created account and searched account DO NOT CORRESPOND.");
-			}
-		}
-
-	}
-
 	@Test(priority = 8)
 	public void listAllGroupTest() {
-
-		config.setClientId("4ig3tzk76msrvvvpradguxsxuz7lsuhr");
-		config.setClientSecret(clientSecret);
-		config.setRefreshToken(refreshToken);
-		config.setUri("api.box.com");
-		config.setAccessToken(accessToken);
-		config.setEnableFilteredResultsHandler(false);
-
-		connector.init(config);
 
 		SearchResultsHandler handlerFolder = new SearchResultsHandler() {
 

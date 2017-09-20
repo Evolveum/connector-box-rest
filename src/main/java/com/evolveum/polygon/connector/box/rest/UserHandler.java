@@ -384,7 +384,8 @@ public class UserHandler extends ObjectsProcessing {
 		} else {
 
 			StringBuilder sb = new StringBuilder();
-			sb.append("Method not allowed: ").append((query).getClass().getSimpleName().toString()).append(";");
+			sb.append("Method not allowed: ").append((query).getClass().getSimpleName().toString()).append(";")
+					.append("Please note that its recommended to enable filteredResultsHandler");
 			throw new ConnectorException(sb.toString());
 
 		}

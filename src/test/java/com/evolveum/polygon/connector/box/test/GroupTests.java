@@ -25,7 +25,6 @@ import org.identityconnectors.framework.common.objects.Uid;
 import org.identityconnectors.framework.common.objects.filter.AttributeFilter;
 import org.identityconnectors.framework.common.objects.filter.EqualsFilter;
 import org.identityconnectors.framework.common.objects.filter.FilterBuilder;
-import org.identityconnectors.framework.common.objects.filter.StartsWithFilter;
 import org.identityconnectors.framework.spi.SearchResultsHandler;
 import org.testng.annotations.Test;
 
@@ -36,11 +35,11 @@ public class GroupTests {
 
 	BoxConnectorConfiguration config = new BoxConnectorConfiguration();
 
-	String clientId = "PleaseEnterValue";
-	GuardedString clientSecret = new GuardedString(new String("PleaseEnterValue").toCharArray());
+	String clientId = "4ig3tzk76msrvvvpradguxsxuz7lsuhr";
+	GuardedString clientSecret = new GuardedString(new String("L9SzKgeLU28jFzmmhYEAabqxEWTmcDT4").toCharArray());
 	GuardedString refreshToken = new GuardedString(
-			new String("PleaseEnterValue").toCharArray());
-	GuardedString accessToken = new GuardedString(new String("PleaseEnterValue").toCharArray());
+			new String("7aeRCAC3HSkvy1GsVQbHft4gmFOFZgHuL9DwmYLkWlMjdpBF7ekJchNvUuUkZQ9k").toCharArray());
+	GuardedString accessToken = new GuardedString(new String("XckcHFthaE4jLLrFHaXaTccfKV1YF0Vt").toCharArray());
 	String boxEndpoint = "api.box.com";
 
 	private static final Log LOG = Log.getLog(BoxConnector.class);
@@ -197,15 +196,6 @@ public class GroupTests {
 	@Test(priority = 5)
 	public void UpdateGroupTest() {
 
-		config.setClientId("4ig3tzk76msrvvvpradguxsxuz7lsuhr");
-		config.setClientSecret(clientSecret);
-		config.setRefreshToken(refreshToken);
-		config.setUri("api.box.com");
-		config.setAccessToken(accessToken);
-		config.setEnableFilteredResultsHandler(true);
-
-		connector.init(config);
-
 		groupAttributes.clear();
 		groupAttributes.add(AttributeBuilder.build("__NAME__", updatedName));
 
@@ -298,15 +288,6 @@ public class GroupTests {
 	@Test(priority = 6)
 	public void equalsUidFilterGroupTest() {
 
-		config.setClientId("4ig3tzk76msrvvvpradguxsxuz7lsuhr");
-		config.setClientSecret(clientSecret);
-		config.setRefreshToken(refreshToken);
-		config.setUri("api.box.com");
-		config.setAccessToken(accessToken);
-		config.setEnableFilteredResultsHandler(true);
-
-		connector.init(config);
-
 		SearchResultsHandler handlerFolder = new SearchResultsHandler() {
 
 			@Override
@@ -348,15 +329,6 @@ public class GroupTests {
 	@Test(priority = 6, expectedExceptions = ConnectorException.class)
 	public void equalsNameFilterGroupTest() {
 
-		config.setClientId("4ig3tzk76msrvvvpradguxsxuz7lsuhr");
-		config.setClientSecret(clientSecret);
-		config.setRefreshToken(refreshToken);
-		config.setUri("api.box.com");
-		config.setAccessToken(accessToken);
-		config.setEnableFilteredResultsHandler(false);
-
-		connector.init(config);
-
 		SearchResultsHandler handlerFolder = new SearchResultsHandler() {
 
 			@Override
@@ -395,67 +367,8 @@ public class GroupTests {
 
 	}
 
-	@Test(priority = 6, expectedExceptions = ConnectorException.class)
-	public void nameStartWithFilterGroupTest() {
-
-		config.setClientId("4ig3tzk76msrvvvpradguxsxuz7lsuhr");
-		config.setClientSecret(clientSecret);
-		config.setRefreshToken(refreshToken);
-		config.setUri("api.box.com");
-		config.setAccessToken(accessToken);
-		config.setEnableFilteredResultsHandler(false);
-
-		connector.init(config);
-
-		SearchResultsHandler handlerFolder = new SearchResultsHandler() {
-
-			@Override
-			public boolean handle(ConnectorObject connectorObject) {
-				groupResults.add(connectorObject);
-				return true;
-			}
-
-			@Override
-			public void handleResult(SearchResult result) {
-				LOG.info("im handling {0}", result.getRemainingPagedResults());
-				LOG.info("pagedResultsCookie,remainingPagedResults,allResultsReturned {0} {1} {2}",
-						result.getPagedResultsCookie(), result.getRemainingPagedResults(),
-						result.isAllResultsReturned());
-
-			}
-		};
-
-		AttributeFilter startNameFilter = (StartsWithFilter) FilterBuilder
-				.startsWith(AttributeBuilder.build(Name.NAME, "Test"));
-
-		groupResults.clear();
-		connector.executeQuery(groupObject, startNameFilter, handlerFolder, options);
-
-		for (int i = 0; i < groupResults.size(); i++) {
-			LOG.info("RESULT: {0}", groupResults.get(i).getAttributes());
-			if (groupResults.get(i).getUid().equals(groupUid)) {
-				LOG.ok("\n-------------------------------------------------------------------------"
-						+ "\n\tPASSED: Attributes of group and searched group CORRESPOND"
-						+ "\n\t-------------------------------------------------------------------------");
-			} else {
-				throw new InvalidAttributeValueException(
-						"Attributes of created group and searched group DO NOT CORRESPOND.");
-			}
-		}
-
-	}
-
 	@Test(priority = 7)
 	public void listAllGroupTest() {
-
-		config.setClientId("4ig3tzk76msrvvvpradguxsxuz7lsuhr");
-		config.setClientSecret(clientSecret);
-		config.setRefreshToken(refreshToken);
-		config.setUri("api.box.com");
-		config.setAccessToken(accessToken);
-		config.setEnableFilteredResultsHandler(false);
-
-		connector.init(config);
 
 		SearchResultsHandler handlerFolder = new SearchResultsHandler() {
 

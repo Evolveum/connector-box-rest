@@ -65,8 +65,6 @@ public class FoldersHandler extends ObjectsProcessing {
 	private static final String ATTR_SL_ACCESS = "shared_link.access";
 	private static final String ATTR_SL_PASSWORD = "shared_link.password";
 	private static final String ATTR_SL_UNSHARED = "shared_link.unshared_at";
-	// private static final String ATTR_SL_PERMISSIONS =
-	// "shared_link.permissions";
 	private static final String ATTR_SL_PER_DOWNLOAD = "shared_link.permissions.can_download";
 	private static final String ATTR_SL_PER_PREVIEW = "shared_link.permissions.can_preview";
 	private static final String ATTR_SL_URL = "shared_link.url";
@@ -482,7 +480,8 @@ public class FoldersHandler extends ObjectsProcessing {
 		} else {
 
 			StringBuilder sb = new StringBuilder();
-			sb.append("Method not allowed: ").append((query).getClass().getSimpleName().toString()).append(";");
+			sb.append("Method not allowed: ").append((query).getClass().getSimpleName().toString()).append(";")
+					.append("Please note that its recommended to enable filteredResultsHandler");
 			throw new ConnectorException(sb.toString());
 
 		}

@@ -40,16 +40,16 @@ public class AccountTests {
 
 	BoxConnectorConfiguration config = new BoxConnectorConfiguration();
 
-	String clientId = "PleaseEnterValue";
-	GuardedString clientSecret = new GuardedString(new String("PleaseEnterValue").toCharArray());
+	String clientId = "4ig3tzk76msrvvvpradguxsxuz7lsuhr";
+	GuardedString clientSecret = new GuardedString(new String("L9SzKgeLU28jFzmmhYEAabqxEWTmcDT4").toCharArray());
 	GuardedString refreshToken = new GuardedString(
-			new String("PleaseEnterValue").toCharArray());
-	GuardedString accessToken = new GuardedString(new String("PleaseEnterValue").toCharArray());
+			new String("7aeRCAC3HSkvy1GsVQbHft4gmFOFZgHuL9DwmYLkWlMjdpBF7ekJchNvUuUkZQ9k").toCharArray());
+	GuardedString accessToken = new GuardedString(new String("XckcHFthaE4jLLrFHaXaTccfKV1YF0Vt").toCharArray());
 
-	GuardedString invalidClientSecret = new GuardedString(new String("PleaseEnterValue").toCharArray());
+	GuardedString invalidClientSecret = new GuardedString(new String("L9SzKgeLU28jlkjmhYEAabqxEWTmcDT4").toCharArray());
 	GuardedString invalidRefreshToken = new GuardedString(
-			new String("PleaseEnterValue").toCharArray());
-	GuardedString invalidAccessToken = new GuardedString(new String("PleaseEnterValue").toCharArray());
+			new String("7aeRCAC3HSkvy1GsVQbHft4gmFOFZgHuL9DwmYLkWlMjdpBF7epoihNvUuUkZQ9k").toCharArray());
+	GuardedString invalidAccessToken = new GuardedString(new String("XckcmnbhaE4jLLrFHaXaTccfKV1YF0Vt").toCharArray());
 	String boxEndpoint = "api.box.com";
 
 	private static final Log LOG = Log.getLog(BoxConnector.class);
@@ -209,14 +209,6 @@ public class AccountTests {
 	@Test(priority = 9, expectedExceptions = UnknownUidException.class)
 	public void unknownAccountUidNegativeTest() {
 
-		// config.setClientId("4ig3tzk76msrvvvpradguxsxuz7lsuhr");
-		// config.setClientSecret(clientSecret);
-		// config.setRefreshToken(refreshToken);
-		// config.setUri("api.box.com");
-		// config.setAccessToken(accessToken);
-		// config.setEnableFilteredResultsHandler(true);
-		// connector.init(config);
-
 		SearchResultsHandler handlerAccount = new SearchResultsHandler() {
 
 			@Override
@@ -245,28 +237,12 @@ public class AccountTests {
 	@Test(priority = 4, expectedExceptions = AlreadyExistsException.class)
 	public void createDuplicateAccountNegativeTest() {
 
-		// config.setClientId("4ig3tzk76msrvvvpradguxsxuz7lsuhr");
-		// config.setClientSecret(clientSecret);
-		// config.setRefreshToken(refreshToken);
-		// config.setUri("api.box.com");
-		// config.setAccessToken(accessToken);
-		// config.setEnableFilteredResultsHandler(true);
-		// connector.init(config);
-
 		connector.create(accountObject, accountAttributes, null);
 
 	}
 
 	@Test(priority = 5)
 	public void UpdateAccountTest() {
-
-		// config.setClientId("4ig3tzk76msrvvvpradguxsxuz7lsuhr");
-		// config.setClientSecret(clientSecret);
-		// config.setRefreshToken(refreshToken);
-		// config.setUri("api.box.com");
-		// config.setAccessToken(accessToken);
-		// config.setEnableFilteredResultsHandler(true);
-		// connector.init(config);
 
 		accountAttributes.clear();
 		accountAttributes.add(AttributeBuilder.build("phone", "*123456789*"));
@@ -311,15 +287,6 @@ public class AccountTests {
 	@Test(priority = 6)
 	public void equalsUidFilterAccountTest() {
 
-		// config.setClientId("4ig3tzk76msrvvvpradguxsxuz7lsuhr");
-		// config.setClientSecret(clientSecret);
-		// config.setRefreshToken(refreshToken);
-		// config.setUri("api.box.com");
-		// config.setAccessToken(accessToken);
-		// config.setEnableFilteredResultsHandler(true);
-		//
-		// connector.init(config);
-
 		SearchResultsHandler handlerFolder = new SearchResultsHandler() {
 
 			@Override
@@ -360,15 +327,6 @@ public class AccountTests {
 
 	@Test(priority = 6, expectedExceptions = ConnectorException.class)
 	public void equalsNameFilterAccountTest() {
-
-		// config.setClientId("4ig3tzk76msrvvvpradguxsxuz7lsuhr");
-		// config.setClientSecret(clientSecret);
-		// config.setRefreshToken(refreshToken);
-		// config.setUri("api.box.com");
-		// config.setAccessToken(accessToken);
-		// config.setEnableFilteredResultsHandler(false);
-		//
-		// connector.init(config);
 
 		SearchResultsHandler handlerFolder = new SearchResultsHandler() {
 
@@ -411,15 +369,6 @@ public class AccountTests {
 	@Test(priority = 6)
 	public void nameStartWithFilterAccountTest() {
 
-		// config.setClientId("4ig3tzk76msrvvvpradguxsxuz7lsuhr");
-		// config.setClientSecret(clientSecret);
-		// config.setRefreshToken(refreshToken);
-		// config.setUri("api.box.com");
-		// config.setAccessToken(accessToken);
-		// config.setEnableFilteredResultsHandler(false);
-		//
-		// connector.init(config);
-
 		SearchResultsHandler handlerFolder = new SearchResultsHandler() {
 
 			@Override
@@ -460,15 +409,6 @@ public class AccountTests {
 
 	@Test(priority = 7)
 	public void listAllAccountTest() {
-
-		// config.setClientId("4ig3tzk76msrvvvpradguxsxuz7lsuhr");
-		// config.setClientSecret(clientSecret);
-		// config.setRefreshToken(refreshToken);
-		// config.setUri("api.box.com");
-		// config.setAccessToken(accessToken);
-		// config.setEnableFilteredResultsHandler(false);
-		//
-		// connector.init(config);
 
 		SearchResultsHandler handlerFolder = new SearchResultsHandler() {
 
