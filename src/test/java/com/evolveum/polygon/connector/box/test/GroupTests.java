@@ -35,11 +35,11 @@ public class GroupTests {
 
 	BoxConnectorConfiguration config = new BoxConnectorConfiguration();
 
-	String clientId = "4ig3tzk76msrvvvpradguxsxuz7lsuhr";
-	GuardedString clientSecret = new GuardedString(new String("L9SzKgeLU28jFzmmhYEAabqxEWTmcDT4").toCharArray());
+	String clientId = "PleaseEnterValue";
+	GuardedString clientSecret = new GuardedString(new String("PleaseEnterValue").toCharArray());
 	GuardedString refreshToken = new GuardedString(
-			new String("7aeRCAC3HSkvy1GsVQbHft4gmFOFZgHuL9DwmYLkWlMjdpBF7ekJchNvUuUkZQ9k").toCharArray());
-	GuardedString accessToken = new GuardedString(new String("XckcHFthaE4jLLrFHaXaTccfKV1YF0Vt").toCharArray());
+			new String("PleaseEnterValue").toCharArray());
+	GuardedString accessToken = new GuardedString(new String("PleaseEnterValue").toCharArray());
 	String boxEndpoint = "api.box.com";
 
 	private static final Log LOG = Log.getLog(BoxConnector.class);
