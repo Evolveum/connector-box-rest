@@ -20,7 +20,6 @@ import org.identityconnectors.common.logging.Log;
 import org.identityconnectors.common.security.GuardedString;
 import org.identityconnectors.framework.common.exceptions.ConfigurationException;
 import org.identityconnectors.framework.spi.AbstractConfiguration;
-import org.identityconnectors.framework.spi.ConfigurationForResultsHandler;
 import org.identityconnectors.framework.spi.ConfigurationProperty;
 import org.identityconnectors.framework.spi.StatefulConfiguration;
 
@@ -29,7 +28,7 @@ import org.identityconnectors.framework.spi.StatefulConfiguration;
  *
  */
 public class BoxConnectorConfiguration extends AbstractConfiguration
-		implements StatefulConfiguration, ConfigurationForResultsHandler {
+		implements StatefulConfiguration {
 
 	private String clientId;
 	private String URI;
@@ -122,67 +121,4 @@ public class BoxConnectorConfiguration extends AbstractConfiguration
 	@Override
 	public void release() {
 	}
-
-	@Override
-	public boolean isEnableAttributesToGetSearchResultsHandler() {
-		return enableAttributesToGetSearchResultsHandler;
-	}
-
-	@Override
-	public void setEnableAttributesToGetSearchResultsHandler(boolean enableAttributesToGetSearchResultsHandler) {
-		LOGGER.info("I AM SETTING AttributesToGetSearchResultsHandler : {0}",
-				String.valueOf(enableAttributesToGetSearchResultsHandler));
-		this.enableAttributesToGetSearchResultsHandler = enableAttributesToGetSearchResultsHandler;
-
-	}
-
-	@Override
-	public boolean isEnableCaseInsensitiveFilter() {
-		return enableCaseInsensitiveFilter;
-	}
-
-	@Override
-	public void setEnableCaseInsensitiveFilter(boolean enableCaseInsensitiveFilter) {
-		LOGGER.info("I AM SETTING CaseInsensitiveFilter : {0}", String.valueOf(enableCaseInsensitiveFilter));
-		this.enableCaseInsensitiveFilter = enableCaseInsensitiveFilter;
-
-	}
-
-	@Override
-	public boolean isFilteredResultsHandlerInValidationMode() {
-		return filteredResultsHandlerInValidationMode;
-	}
-
-	@Override
-	public void setFilteredResultsHandlerInValidationMode(boolean filteredResultsHandlerInValidationMode) {
-		LOGGER.info("I AM SETTING FilteredResultsHandlerInValidationMode : {0}",
-				String.valueOf(filteredResultsHandlerInValidationMode));
-		this.filteredResultsHandlerInValidationMode = filteredResultsHandlerInValidationMode;
-
-	}
-
-	@Override
-	public boolean isEnableFilteredResultsHandler() {
-		return enableFilteredResultsHandler;
-	}
-
-	@Override
-	public void setEnableFilteredResultsHandler(boolean enableFilteredResultsHandler) {
-		LOGGER.info("I AM SETTING FilteredResultsHandler: {0}", String.valueOf(enableFilteredResultsHandler));
-		this.enableFilteredResultsHandler = enableFilteredResultsHandler;
-
-	}
-
-	@Override
-	public boolean isEnableNormalizingResultsHandler() {
-		return enableNormalizingResultsHandler;
-	}
-
-	@Override
-	public void setEnableNormalizingResultsHandler(boolean enableNormalizingResultsHandler) {
-		LOGGER.info("I AM SETTING NormalizingResultsHandler: {0}", String.valueOf(enableNormalizingResultsHandler));
-		this.enableNormalizingResultsHandler = enableNormalizingResultsHandler;
-
-	}
-
 }

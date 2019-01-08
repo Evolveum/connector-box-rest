@@ -61,7 +61,6 @@ public class FolderTests {
 		config.setRefreshToken(refreshToken);
 		config.setUri("api.box.com");
 		config.setAccessToken(accessToken);
-		config.setEnableFilteredResultsHandler(true);
 		connector.init(config);
 		connector.test();
 
@@ -75,7 +74,6 @@ public class FolderTests {
 		config.setRefreshToken(refreshToken);
 		config.setUri("api.box.com");
 		config.setAccessToken(accessToken);
-		config.setEnableFilteredResultsHandler(true);
 
 		connector.init(config);
 
@@ -146,7 +144,6 @@ public class FolderTests {
 		config.setRefreshToken(refreshToken);
 		config.setUri("api.box.com");
 		config.setAccessToken(accessToken);
-		config.setEnableFilteredResultsHandler(true);
 
 		connector.init(config);
 
@@ -196,7 +193,6 @@ public class FolderTests {
 		config.setRefreshToken(refreshToken);
 		config.setUri("api.box.com");
 		config.setAccessToken(accessToken);
-		config.setEnableFilteredResultsHandler(true);
 		connector.init(config);
 
 		SearchResultsHandler handlerAccount = new SearchResultsHandler() {
@@ -231,7 +227,6 @@ public class FolderTests {
 		config.setRefreshToken(refreshToken);
 		config.setUri("api.box.com");
 		config.setAccessToken(accessToken);
-		config.setEnableFilteredResultsHandler(true);
 		connector.init(config);
 
 		connector.create(folderObject, folderAttributes, null);
