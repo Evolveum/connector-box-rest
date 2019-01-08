@@ -474,15 +474,8 @@ public class FoldersHandler extends ObjectsProcessing {
 		} else if (query == null && objectClass.is(FOLDER_NAME)) {
 			handlerJson(handler, new Uid("0"));
 
-		} else if (configuration.isEnableFilteredResultsHandler()) {
-			handlerJson(handler, new Uid("0"));
-
 		} else {
-
-			StringBuilder sb = new StringBuilder();
-			sb.append("Method not allowed: ").append((query).getClass().getSimpleName().toString()).append(";")
-					.append("Please note that its recommended to enable filteredResultsHandler");
-			throw new ConnectorException(sb.toString());
+			handlerJson(handler, new Uid("0"));
 
 		}
 

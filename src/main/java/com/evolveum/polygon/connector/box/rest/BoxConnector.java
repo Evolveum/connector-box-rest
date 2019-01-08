@@ -194,8 +194,6 @@ public class BoxConnector implements TestOp, SchemaOp, Connector, DeleteOp, Sear
 			if (objectClass.is(ObjectClass.ACCOUNT_NAME)) {
 				UserHandler user = new UserHandler(configuration);
 				user.executeQuery(objectClass, query, handler, options);
-			} else if (!configuration.isEnableFilteredResultsHandler()) {
-				throw new ConnectorException("Unsupported filter: StartWithFilter for " + objectClass);
 			}
 
 			// EqualsFilter
@@ -211,7 +209,7 @@ public class BoxConnector implements TestOp, SchemaOp, Connector, DeleteOp, Sear
 				folder.executeQuery(objectClass, query, handler, options);
 			}
 
-		} else if (configuration.isEnableFilteredResultsHandler() && query instanceof Filter) {
+		} else if (query instanceof Filter) {
 			if (objectClass.is(ObjectClass.ACCOUNT_NAME)) {
 				UserHandler user = new UserHandler(configuration);
 				user.executeQuery(objectClass, query, handler, options);
@@ -232,8 +230,6 @@ public class BoxConnector implements TestOp, SchemaOp, Connector, DeleteOp, Sear
 		} else if (query == null && objectClass.is(FOLDER_NAME)) {
 			FoldersHandler folder = new FoldersHandler(configuration);
 			folder.executeQuery(objectClass, query, handler, options);
-		} else {
-			throw new ConnectorException("Unsupported query filter: " + query);
 		}
 	}
 

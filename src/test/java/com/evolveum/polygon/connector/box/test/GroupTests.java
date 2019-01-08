@@ -60,7 +60,6 @@ public class GroupTests {
 		config.setRefreshToken(refreshToken);
 		config.setUri("api.box.com");
 		config.setAccessToken(accessToken);
-		config.setEnableFilteredResultsHandler(true);
 		connector.init(config);
 		connector.test();
 
@@ -74,7 +73,6 @@ public class GroupTests {
 		config.setRefreshToken(refreshToken);
 		config.setUri("api.box.com");
 		config.setAccessToken(accessToken);
-		config.setEnableFilteredResultsHandler(true);
 		connector.init(config);
 
 		Schema schema = connector.schema();
@@ -149,7 +147,6 @@ public class GroupTests {
 		config.setRefreshToken(refreshToken);
 		config.setUri("api.box.com");
 		config.setAccessToken(accessToken);
-		config.setEnableFilteredResultsHandler(true);
 
 		connector.init(config);
 
@@ -243,7 +240,6 @@ public class GroupTests {
 		config.setRefreshToken(refreshToken);
 		config.setUri("api.box.com");
 		config.setAccessToken(accessToken);
-		config.setEnableFilteredResultsHandler(true);
 		connector.init(config);
 
 		SearchResultsHandler handlerAccount = new SearchResultsHandler() {
@@ -278,7 +274,6 @@ public class GroupTests {
 		config.setRefreshToken(refreshToken);
 		config.setUri("api.box.com");
 		config.setAccessToken(accessToken);
-		config.setEnableFilteredResultsHandler(true);
 		connector.init(config);
 
 		connector.create(groupObject, groupAttributes, null);

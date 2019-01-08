@@ -366,7 +366,7 @@ public class UserHandler extends ObjectsProcessing {
 			HttpGet request = new HttpGet(uri);
 			handleUsers(request, handler, query, options);
 
-		} else if (configuration.isEnableFilteredResultsHandler() == true) {
+		} else {
 
 			uriBuilder.setPath(CRUD);
 
@@ -380,13 +380,6 @@ public class UserHandler extends ObjectsProcessing {
 			}
 			HttpGet request = new HttpGet(uri);
 			handleUsers(request, handler, query, options);
-
-		} else {
-
-			StringBuilder sb = new StringBuilder();
-			sb.append("Method not allowed: ").append((query).getClass().getSimpleName().toString()).append(";")
-					.append("Please note that its recommended to enable filteredResultsHandler");
-			throw new ConnectorException(sb.toString());
 
 		}
 

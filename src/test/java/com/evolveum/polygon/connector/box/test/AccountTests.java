@@ -70,7 +70,6 @@ public class AccountTests {
 		config.setRefreshToken(refreshToken);
 		config.setUri("api.box.com");
 		config.setAccessToken(accessToken);
-		config.setEnableFilteredResultsHandler(true);
 
 		connector.init(config);
 		connector.test();
@@ -85,7 +84,6 @@ public class AccountTests {
 		config.setRefreshToken(refreshToken);
 		config.setUri("api.box.com");
 		config.setAccessToken(accessToken);
-		config.setEnableFilteredResultsHandler(true);
 		connector.init(config);
 
 		Schema schema = connector.schema();
@@ -162,7 +160,6 @@ public class AccountTests {
 		config.setRefreshToken(refreshToken);
 		config.setUri("api.box.com");
 		config.setAccessToken(accessToken);
-		config.setEnableFilteredResultsHandler(true);
 		connector.init(config);
 
 		accountAttributes.clear();
@@ -453,7 +450,6 @@ public class AccountTests {
 		config.setRefreshToken(invalidRefreshToken);
 		config.setUri("api.box.com");
 		config.setAccessToken(invalidAccessToken);
-		config.setEnableFilteredResultsHandler(false);
 
 		connector.init(config);
 		connector.test();
@@ -467,7 +463,6 @@ public class AccountTests {
 		config.setRefreshToken(refreshToken);
 		config.setUri("api.brx.com");
 		config.setAccessToken(accessToken);
-		config.setEnableFilteredResultsHandler(false);
 
 		connector.init(config);
 
@@ -482,7 +477,6 @@ public class AccountTests {
 		configuration.setRefreshToken(refreshToken);
 		configuration.setUri("api.box.com");
 		configuration.setAccessToken(accessToken);
-		configuration.setEnableFilteredResultsHandler(false);
 
 		connector.init(configuration);
 
@@ -497,7 +491,6 @@ public class AccountTests {
 		config.setRefreshToken(refreshToken);
 		config.setUri("api.box.com");
 		config.setAccessToken(accessToken);
-		config.setEnableFilteredResultsHandler(true);
 
 		if (accountUid != null) {
 			connector.delete(accountObject, accountUid, options);
